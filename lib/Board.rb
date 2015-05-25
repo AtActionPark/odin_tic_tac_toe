@@ -7,35 +7,39 @@ class Board
       puts "Please choose between 9, 16, 25, 36, 49, 81 or 100"
     else
       @square_size = square_size
-      print_legend
       @state = []
       (1..square_size).each do |i|
         @state.push(" ")
         end
       @win = false
       @draw = false
-      print_current_board
     end
   end
 
-  def set_cell (cell, value)
-    if @state[cell-1] == " "
-      @state[cell-1] = value
-    else
-      puts "Please input an empty cell"
-      player_two_move = gets.chomp.to_i
-      set_cell(player_two_move, value)
-    end
+  def do_move (cell, value)
+    set_cell(cell, value)
     check_state
     check_draw
-    reset_board
   end  
+
+  def check_cell(cell)
+    @state[cell]
+  end
 
   def reset_board
     puts ""
     puts "New state"
+    draw_boards
+  end
+
+  def draw_boards
     print_legend
     print_current_board
+  end
+
+  def reset
+    @win = false
+    @draw = false
   end
 
   private
@@ -102,4 +106,15 @@ class Board
         @draw = false if i == " "
     end
   end
+
+  def set_cell  (cell, value)
+    if @state[cell-1] == " "
+      @state[cell-1] = value
+    else
+      puts "Please input an empty cell"
+      player_two_move = gets.chomp.to_i
+      set_cell(player_two_move, value)
+    end
+  end
+
 end
